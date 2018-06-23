@@ -10,7 +10,7 @@ describe('api', () => {
     fetch = sinon.stub().returns(Promise.resolve(response))
     fetchToken = sinon.stub(token, 'fetchToken')
     storeToken = sinon.stub(token, 'storeToken')
-    fetchToken.returns({})
+    fetchToken.returns("")
     global.fetch = fetch
   })
   afterEach(() => {
@@ -31,7 +31,7 @@ describe('api', () => {
     it('with expected method', () => {
       config.apiUrl = 'http://localhost/'
       callApi('ENDPOINT', 'METHOD', {}, null)
-      fetch.should.be.calledWith(sinon.match.any, sinon.match.has('method', 'METHOD').and(sinon.match.has('credentials', 'include')))
+      fetch.should.be.calledWith(sinon.match.any, sinon.match.has('method', 'METHOD'))
     })
     it('with token', () => {
       fetchToken.returns('TOKEN')
@@ -54,21 +54,11 @@ describe('api', () => {
   context('response', () => {
     it('store token', () => {
       let getHeader = sinon.stub(response.headers, 'get')
-      getHeader.withArgs('access-token').returns('RESPONSE_ACCESS_TOKEN')
-      getHeader.withArgs('client').returns('RESPONSE_CLIENT')
-      getHeader.withArgs('expiry').returns('RESPONSE_EXPIRY')
-      getHeader.withArgs('token-type').returns('RESPONSE_TYPE')
-      getHeader.withArgs('uid').returns('RESPONSE_UID')
+      getHeader.withArgs('Authorization').returns('Bearer TOKEN')
 
       callApi('ENDPOINT', 'POST')
 
-      storeToken.should.be.calledWith({
-        accessToken: 'RESPONSE_ACCESS_TOKEN',
-        client: 'RESPONSE_CLIENT',
-        expiry: 'RESPONSE_EXPIRY',
-        type: 'RESPONSE_TYPE',
-        uid: 'RESPONSE_UID'
-      })
+      storeToken.should.be.calledWith('TOKEN')
     })
     it('bad response', () => {
       response.json = () => Promise.resolve({a:1})
