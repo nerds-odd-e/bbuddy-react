@@ -28,9 +28,6 @@ export default function callApi(endpoint, method, data, schema) {
     .then(({json, response}) => {
       let token
       let authorization = response.headers.get('Authorization')
-      console.log('***********************')
-      console.log(json, response, authorization)
-      console.log('***********************')
       if (authorization){
         token = authorization.substring(7)
         storeToken(token)
