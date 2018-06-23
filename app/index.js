@@ -10,7 +10,7 @@ import {fetchToken} from './api/token'
 injectTapEventPlugin();
 
 let token = fetchToken()
-const store = configureStore({authentication: {isAuthenticated: !!token.client}})
+const store = configureStore({authentication: {isAuthenticated: !!token}})
 const render = Component => {
   ReactDOM.render(
     <AppContainer>

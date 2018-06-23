@@ -34,20 +34,10 @@ describe('api', () => {
       fetch.should.be.calledWith(sinon.match.any, sinon.match.has('method', 'METHOD').and(sinon.match.has('credentials', 'include')))
     })
     it('with token', () => {
-      fetchToken.returns({
-        client: 'CLIENT',
-        accessToken: 'ACCESS_TOKEN',
-        uid: 'UID',
-        expiry: 'EXPIRY',
-        type: 'TYPE'
-      })
+      fetchToken.returns('TOKEN')
       callApi('ENDPOINT', 'METHOD', {}, null)
       fetch.should.be.calledWith(sinon.match.any, sinon.match.has('headers', {
-        'client': 'CLIENT',
-        'access-token': 'ACCESS_TOKEN',
-        'uid': 'UID',
-        'expiry': 'EXPIRY',
-        'token-type': 'TYPE',
+        'Authorization': 'Bearer TOKEN',
         'Content-Type': 'application/json'
       }))
     })

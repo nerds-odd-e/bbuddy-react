@@ -6,7 +6,7 @@ export function doSignIn(credential){
   return {
     [CALL_API]: {
       types: [AuthenticationConstants.SIGN_IN_REQUEST, AuthenticationConstants.SIGN_IN_SUCCESS, AuthenticationConstants.SIGN_IN_FAILURE],
-      endpoint: `auth/sign_in`,
+      endpoint: `login`,
       method: 'POST',
       data: credential
     }

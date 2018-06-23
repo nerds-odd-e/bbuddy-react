@@ -10,15 +10,10 @@ export default function callApi(endpoint, method, data, schema) {
   let token = fetchToken()
   const options = {
     headers: {
-      'client': token.client,
-      'access-token': token.accessToken,
-      'uid': token.uid,
-      'expiry': token.expiry,
-      'token-type': token.type,
+      'Authorization': `Bearer ${token}`,
       'Content-Type': 'application/json'
     },
-    method: method,
-    credentials: 'include'
+    method: method
   }
   if (data) {
     if (method.toLowerCase() == 'get') {
@@ -31,14 +26,15 @@ export default function callApi(endpoint, method, data, schema) {
   return fetch(fullUrl, options)
     .then(response => response.json().then(json =>  ({json, response}) ))
     .then(({json, response}) => {
-      let token = {
-        accessToken: response.headers.get('access-token'),
-        client: response.headers.get('client'),
-        expiry: response.headers.get('expiry'),
-        type: response.headers.get('token-type'),
-        uid: response.headers.get('uid'),
+      let token
+      let authorization = response.headers.get('Authorization')
+      console.log('***********************')
+      console.log(json, response, authorization)
+      console.log('***********************')
+      if (authorization){
+        token = authorization.substring(7)
+        storeToken(token)
       }
-      storeToken(token)
 
       if (!response.ok) {
         return Promise.reject({status: response.status, data: json})
