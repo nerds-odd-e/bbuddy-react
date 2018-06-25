@@ -1,6 +1,6 @@
 import {default as api, CALL_API} from '../../app/middleware/api'
 import * as Api from '../../app/api'
-import {push} from 'react-router-redux'
+import {push} from 'connected-react-router'
 
 describe('Api middleware', () => {
   let store, next, action, callApi

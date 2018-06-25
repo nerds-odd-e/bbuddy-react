@@ -11,6 +11,7 @@ export default class SignInPage extends React.Component {
   signIn() {
     let email = this.refs.email.getValue()
     let password = this.refs.password.getValue()
+    console.log(email, password)
     this.props.signIn({email, password})
   }
 
@@ -35,7 +36,7 @@ export default class SignInPage extends React.Component {
             <RaisedButton
               label='Login'
               primary={true}
-              onTouchTap={() => this.signIn()}/>
+              onClick={() => this.signIn()}/>
           </CardActions>
         </Card>
       </MuiThemeProvider>

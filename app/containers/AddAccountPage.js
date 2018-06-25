@@ -22,7 +22,7 @@ export default class AddAccountPage extends React.Component {
           <RaisedButton
             label='Save'
             primary={true}
-            onTouchTap={() => this.save()}/>
+            onClick={() => this.save()}/>
         </CardActions>
       </Card>
     )

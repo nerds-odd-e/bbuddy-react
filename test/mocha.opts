@@ -1,6 +1,6 @@
+--require babel-core/register
 --require test/setup
 --recursive
---compilers js:babel-core/register
---reporter list 
+--reporter list
 --colors
 --growl

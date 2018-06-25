@@ -1,4 +1,3 @@
-import {browserHistory, hashHistory} from 'react-router'
+import {createHashHistory} from 'history'
 
-// export default process.env.NODE_ENV == "production" ? browserHistory : hashHistory
-export default hashHistory
+export default createHashHistory()

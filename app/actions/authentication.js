@@ -1,6 +1,6 @@
 import { CALL_API } from '../middleware/api'
 import * as AuthenticationConstants from '../constants/authentication'
-import {push} from 'react-router-redux'
+import {push} from 'connected-react-router'
 
 export function doSignIn(credential){
   return {
@@ -17,7 +17,7 @@ export function signIn(credential){
   return (dispatch, getState) => {
     dispatch(doSignIn(credential))
       .then(action => {
-        if (action.type == AuthenticationConstants.SIGN_IN_SUCCESS){
+        if (action.type === AuthenticationConstants.SIGN_IN_SUCCESS){
           dispatch(push('/'))
         }
       })

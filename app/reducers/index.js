@@ -1,5 +1,4 @@
 import { combineReducers } from 'redux'
-import {routerReducer as routing} from 'react-router-redux'
 import pageStyle from './pageStyle'
 import notification from './notification'
 import entities from './entities'
@@ -11,8 +10,7 @@ const rootReducer = combineReducers({
   pageStyle,
   notification,
   indicator,
-  entities,
-  routing
+  entities
 })
 
 export default rootReducer

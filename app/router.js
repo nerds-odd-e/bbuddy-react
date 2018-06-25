@@ -1,27 +1,43 @@
 import React from 'react'
-import {Router, Route, IndexRedirect} from 'react-router'
-import {syncHistoryWithStore} from 'react-router-redux'
+import {Route, Switch, Redirect} from 'react-router'
 import Authentication from './containers/Authentication'
-import history from './history'
 import SignInPage from './containers/SignInPage'
 import Page from './containers/Page'
 import DashboardPage from './containers/DashboardPage'
 import AccountsPage from './containers/AccountsPage'
 import AddAccountPage from './containers/AddAccountPage'
 
-export default ({store}) => {
-  const enhancedHistory = syncHistoryWithStore(history, store)
+const Parent = () => (
+  <Page>
+    <Authentication>
+      <Route path="/" component={DashboardPage}/>
+      <Route path="accounts" component={AccountsPage}/>
+      <Route path="accounts/add" component={AddAccountPage}/>
+    </Authentication>
+  </Page>
+)
+
+const Accounts = () => (
+  <Switch>
+    <Route exact path="/" component={layout(AccountsPage)}/>
+    <Route path="add" component={layout(AddAccountPage)}/>
+  </Switch>
+)
+const layout = Component => props => (
+  <Page>
+    <Authentication>
+      <Component/>
+    </Authentication>
+  </Page>
+)
+
+export default () => {
   return (
-    <Router history={enhancedHistory}>
+    <Switch>
       <Route path="/signin" component={SignInPage}/>
-      <Route path="/" component={Page}>
-        <Route component={Authentication}>
-          <IndexRedirect to="dashboard"/>
-          <Route path="dashboard" component={DashboardPage}/>
-          <Route path="accounts" component={AccountsPage}/>
-          <Route path="accounts/add" component={AddAccountPage}/>
-        </Route>
-      </Route>
-    </Router>
+      <Route exact path="/" component={layout(DashboardPage)}/>
+      <Route exact path="/accounts" component={layout(AccountsPage)}/>
+      <Route exact path="/accounts/add" component={layout(AddAccountPage)}/>
+    </Switch>
   )
 }

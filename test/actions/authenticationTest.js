@@ -1,6 +1,6 @@
 import {SIGN_IN_SUCCESS, SIGN_IN_FAILURE} from '../../app/constants/authentication'
 import {signIn, doSignIn} from '../../app/actions/authentication'
-import {push} from 'react-router-redux'
+import {push} from 'connected-react-router'
 
 describe('authentication', () => {
   let dispatch, getState, credential

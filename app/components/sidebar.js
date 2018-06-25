@@ -4,7 +4,7 @@ import {connect} from 'react-redux'
 import {List, ListItem, makeSelectable} from 'material-ui'
 import DashboardIcon from 'material-ui/svg-icons/action/dashboard'
 import AccountIcon from 'material-ui/svg-icons/action/euro-symbol'
-import { routerActions } from 'react-router-redux'
+import { routerActions } from 'connected-react-router'
 
 let SelectableList = makeSelectable(List)
 
@@ -15,8 +15,8 @@ export default class Sidebar extends React.Component {
   }
   render(){
     return (
-      <SelectableList className={this.props.className} value={this.props.location.pathname} onChange={(event, value) => this.goTo(value)}>
-        <ListItem value="/dashboard" primaryText="Dashboard" leftAvatar={<DashboardIcon />} />
+      <SelectableList className={this.props.className} value={this.props.pathname} onChange={(event, value) => this.goTo(value)}>
+        <ListItem value="/" primaryText="Dashboard" leftAvatar={<DashboardIcon />} />
         <ListItem value="/accounts" id="Accounts" primaryText="Accounts" leftAvatar={<AccountIcon />}/>
       </SelectableList>
     )
@@ -25,6 +25,7 @@ export default class Sidebar extends React.Component {
 
 function mapStateToProps(state) {
   return {
+    pathname: state.router.location.pathname
   }
 }
 

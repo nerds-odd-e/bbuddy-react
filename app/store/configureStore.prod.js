@@ -2,16 +2,15 @@ import { createStore, applyMiddleware, compose } from 'redux'
 import thunk from 'redux-thunk'
 import api from '../middleware/api'
 import rootReducer from '../reducers'
-import {routerMiddleware} from 'react-router-redux'
 import history from '../history'
 
-const middleware = routerMiddleware(history)
+import { connectRouter, routerMiddleware } from 'connected-react-router'
 
 export default function configureStore(initialState) {
   const finalCreateStore = compose(
     applyMiddleware(thunk, api),
-    applyMiddleware(middleware),
+    applyMiddleware(routerMiddleware(history)),
   )(createStore)
 
-  return finalCreateStore(rootReducer, initialState)
+  return finalCreateStore(connectRouter(history)(rootReducer), initialState)
 }

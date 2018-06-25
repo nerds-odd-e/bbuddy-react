@@ -1,4 +1,4 @@
-import { goBack as back, push} from 'react-router-redux';
+import { goBack as back, push} from 'connected-react-router';
 import {goBack, goToAddAccount} from '../../app/actions/navigation'
 
 describe('Navigation', () => {

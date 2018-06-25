@@ -1,6 +1,6 @@
 import values from 'lodash/values'
 import * as CommonActions from '../actions/common'
-import {push} from 'react-router-redux';
+import {push} from 'connected-react-router';
 import callApi from '../api'
 
 // Action key that carries API call info interpreted by this Redux middleware.

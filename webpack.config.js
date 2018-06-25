@@ -5,6 +5,7 @@ var ExtractTextPlugin = require('extract-text-webpack-plugin')
 
 module.exports = function (dev) {
   var config = {
+    mode: dev ? 'development' : 'production',
     devtool: dev ? 'eval-source-map' : 'source-map',
     entry: {
       app: ['./app/index'],
@@ -19,7 +20,7 @@ module.exports = function (dev) {
         'react-tap-event-plugin',
         'redux',
         'redux-logger',
-        'redux-router',
+        'connected-react-router',
         'redux-thunk'
       ]
     },
@@ -40,8 +41,21 @@ module.exports = function (dev) {
       filename: dev ? '[name].js' : '[name].[hash].js',
       publicPath: dev ? '/' : '/'
     },
+    optimization: {
+      runtimeChunk: {
+        name: "manifest"
+      },
+      splitChunks: {
+        cacheGroups: {
+          commons: {
+            test: /[\\/]node_modules[\\/]/,
+            name: "vendor",
+            chunks: "all"
+          }
+        }
+      }
+    },
     plugins: [
-      new webpack.optimize.CommonsChunkPlugin({name: 'vendor', filename: dev ? 'vendor.js' : 'vendor.[hash].js'}),
       new ExtractTextPlugin(dev ? '[name].css' : '[name].[hash].css'),
       new HtmlWebpackPlugin({
         template: './www/index.html',
@@ -49,7 +63,7 @@ module.exports = function (dev) {
       }),
     ],
     module: {
-      loaders: [{
+      rules: [{
         test: /\.js$/,
         loader: 'babel-loader',
         exclude: /node_modules/
@@ -68,19 +82,7 @@ module.exports = function (dev) {
   if (dev) {
     config.entry.app.unshift('react-hot-loader/patch', 'webpack-dev-server/client?http://localhost:8100', 'webpack/hot/only-dev-server');
     config.plugins.push(new webpack.HotModuleReplacementPlugin())
-    config.plugins.push(new webpack.NamedModulesPlugin())
   } else {
-    config.plugins.push(
-      new webpack.DefinePlugin({
-        "process.env": {
-          // This has effect on the react lib size
-          "NODE_ENV": JSON.stringify("production")
-        }
-      })
-    )
-    config.plugins.push(
-      new webpack.optimize.UglifyJsPlugin()
-    )
     config.plugins.push(
       new webpack.LoaderOptionsPlugin({
         minimize: true

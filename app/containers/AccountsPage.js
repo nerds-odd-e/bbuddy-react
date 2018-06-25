@@ -29,7 +29,7 @@ export default class AccountsPage extends React.Component {
           </Table>
         </CardText>
         <CardActions>
-          <RaisedButton label='Add' primary={true} onTouchTap={goToAddAccount}/>
+          <RaisedButton label='Add' primary={true} onClick={goToAddAccount}/>
         </CardActions>
       </Card>
     )
