@@ -1,12 +1,15 @@
 import React from 'react';
-import {Paper} from 'material-ui';
-import {darkBlack, orange700} from 'material-ui/styles/colors';
+import Paper from '@material-ui/core/Paper';
+import common from '@material-ui/core/colors/common';
+import orange from '@material-ui/core/colors/orange';
+const black = common.black;
+const orange700 = orange['700'];
 
 export default class Header extends React.Component {
   render() {
     let styles = {
       root: {
-        backgroundColor: darkBlack,
+        backgroundColor: black,
         position: 'fixed',
         height: 75,
         top: 0,
@@ -31,7 +34,7 @@ export default class Header extends React.Component {
       }
     };
     return(
-      <Paper zDepth={0} rounded={false} style={styles.root}>
+      <Paper zdepth={0} square={true} style={styles.root}>
         <a href="/" style={styles.home}>
           <span className='hidden-on-mobile' style={styles.span}>BBuddy</span>
         </a>

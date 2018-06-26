@@ -1,42 +1,49 @@
 import React from 'react'
 import {bindActionCreators} from 'redux'
 import {connect} from 'react-redux'
-import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
+import MuiThemeProvider from '@material-ui/core/styles/MuiThemeProvider'
 import * as AuthenticationActions from '../actions/authentication'
-import {Card, CardTitle, CardText, TextField, CardActions, RaisedButton} from 'material-ui'
+import Card from '@material-ui/core/Card'
+import CardHeader from '@material-ui/core/CardHeader'
+import CardContent from '@material-ui/core/CardContent'
+import CardActions from '@material-ui/core/CardActions'
+import Button from '@material-ui/core/Button'
+import TextField from '@material-ui/core/TextField';
 
 @connect(mapStateToProps, mapDispatchToProps)
 export default class SignInPage extends React.Component {
-
+  state = {
+    email: "",
+    password: ""
+  }
   signIn() {
-    let email = this.refs.email.getValue()
-    let password = this.refs.password.getValue()
-    console.log(email, password)
-    this.props.signIn({email, password})
+    this.props.signIn(this.state)
   }
 
   keyPress(event){
-    if (event.charCode == 13){
+    if (event.charCode === 13){
       event.preventDefault()
       this.signIn()
     }
+  }
+  handleChange = name => event => {
+    this.setState({
+      [name]: event.target.value,
+    });
   }
 
   render() {
     const {pageStyle: {muiTheme}} = this.props
     return (
-      <MuiThemeProvider muiTheme={muiTheme}>
+      <MuiThemeProvider theme={muiTheme}>
         <Card>
-          <CardTitle title='Sign In'/>
-          <CardText>
-            <TextField fullWidth={true} id='Username' ref='email' hintText='Email' floatingLabelText='Email' autoFocus={true} />
-            <TextField fullWidth={true} id='Password' ref='password' type="password" hintText='Password' floatingLabelText='Password' onKeyPress={event => this.keyPress(event)} />
-          </CardText>
+          <CardHeader title='Sign In'/>
+          <CardContent>
+            <TextField fullWidth={true} id="email" label='Email' value={this.state.email} onChange={this.handleChange('email')} autoFocus />
+            <TextField fullWidth={true} id="password" type="password" label='Password' value={this.state.password} onChange={this.handleChange('password')} onKeyPress={event => this.keyPress(event)} />
+          </CardContent>
           <CardActions>
-            <RaisedButton
-              label='Login'
-              primary={true}
-              onClick={() => this.signIn()}/>
+            <Button variant="contained" color="primary" onClick={() => this.signIn()}>Login</Button>
           </CardActions>
         </Card>
       </MuiThemeProvider>

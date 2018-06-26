@@ -1,7 +1,7 @@
 import React from 'react';
 import {bindActionCreators} from 'redux'
 import {connect} from 'react-redux'
-import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
+import MuiThemeProvider from '@material-ui/core/styles/MuiThemeProvider'
 import EventListener from 'react-event-listener'
 import Notification from '../containers/Notification'
 import Indicator from '../containers/Indicator'
@@ -28,7 +28,7 @@ export default class Page extends React.Component {
     const {pageStyle: {muiTheme}} = this.props
     return (
       <EventListener target="window" onResize={this.updateDeviceSize.bind(this)}>
-        <MuiThemeProvider muiTheme={muiTheme}>
+        <MuiThemeProvider theme={muiTheme}>
           <div>
             <Header />
             <div className="main">

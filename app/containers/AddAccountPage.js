@@ -1,28 +1,37 @@
 import React from 'react';
-import {Card, CardTitle, CardText, CardActions, RaisedButton, TextField} from 'material-ui'
+import Card from '@material-ui/core/Card'
+import CardHeader from '@material-ui/core/CardHeader'
+import CardContent from '@material-ui/core/CardContent'
+import CardActions from '@material-ui/core/CardActions'
+import Button from '@material-ui/core/Button'
+import TextField from '@material-ui/core/TextField';
 import present from '../presenters/addAccountPagePresenter'
 
 
 @present
 export default class AddAccountPage extends React.Component {
+  state= {
+    name: "",
+    balance: 0
+  }
   save(){
-    let name = this.refs.name.getValue()
-    let balance = this.refs.balance.getValue()
-    this.props.addAccount({name, balance})
+    this.props.addAccount(this.state)
+  }
+  handleChange = name => event => {
+    this.setState({
+      [name]: event.target.value,
+    });
   }
   render() {
     return (
       <Card>
-        <CardTitle title='Add Account'/>
-        <CardText>
-          <TextField fullWidth={true} id="name" ref="name" hintText="Name" floatingLabelText="Name" autoFocus />
-          <TextField fullWidth={true} id="balanceBroughtForward" ref="balance" hintText="Balance" floatingLabelText="Balance" />
-        </CardText>
+        <CardHeader title='Add Account'/>
+        <CardContent>
+          <TextField fullWidth={true} id="name" label="Name" value={this.state.name} onChange={this.handleChange('name')} autoFocus />
+          <TextField fullWidth={true} id="balance" label="Balance" value={this.state.balance} onChange={this.handleChange('balance')} />
+        </CardContent>
         <CardActions>
-          <RaisedButton
-            label='Save'
-            primary={true}
-            onClick={() => this.save()}/>
+          <Button variant="contained" color="primary" onClick={() => this.save()}>Save</Button>
         </CardActions>
       </Card>
     )

@@ -1,7 +1,7 @@
 import React from 'react';
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
-import {Snackbar} from 'material-ui'
+import Snackbar from '@material-ui/core/Snackbar'
 import * as CommonActions from '../actions/common'
 
 @connect(mapStateToProps, mapDispatchToProps)

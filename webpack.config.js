@@ -12,7 +12,8 @@ module.exports = function (dev) {
       vendor: [
         'history',
         'whatwg-fetch',
-        'material-ui',
+        '@material-ui/core',
+        '@material-ui/icons',
         'react',
         'react-dom',
         'react-redux',

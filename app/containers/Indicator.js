@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { RefreshIndicator } from 'material-ui';
+import LinearProgress from '@material-ui/core/LinearProgress';
 
 const style = {
   container: {
@@ -23,12 +23,10 @@ export default class Indicator extends React.Component {
 
     return (
       <div style={style.container}>
-        <RefreshIndicator
+        <LinearProgress
           size={40}
           left={70}
           top={0}
-          loadingColor={"#FF9800"}
-          status="loading"
           style={style.refresh} />
       </div>
     );

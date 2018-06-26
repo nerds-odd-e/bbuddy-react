@@ -1,4 +1,4 @@
-import * as MuiTheme from 'material-ui/styles/getMuiTheme'
+import * as MuiTheme from '@material-ui/core/styles/createMuiTheme'
 import pageStyle from '../../app/reducers/pageStyle'
 
 describe('Page style reducer', () => {
@@ -11,12 +11,12 @@ describe('Page style reducer', () => {
       .should.be.eql({muiTheme: {}, width: 800, mobile: true})
   })
   context('MuiTheme', () => {
-    let getMuiTheme
+    let createMuiTheme
     beforeEach(() => {
-      getMuiTheme = sinon.stub(MuiTheme, 'default').returns({})
+      createMuiTheme = sinon.stub(MuiTheme, 'default').returns({})
     })
     afterEach(() => {
-      getMuiTheme.restore()
+      createMuiTheme.restore()
     })
     it('with default state', () => {
       pageStyle(undefined, {type: 'SOME_ACTION'})
