@@ -7,10 +7,11 @@ import ListItemIcon from '@material-ui/core/ListItemIcon'
 import ListItemText from '@material-ui/core/ListItemText'
 import DashboardIcon from '@material-ui/icons/Dashboard'
 import AccountIcon from '@material-ui/icons/EuroSymbol'
-import { routerActions } from 'connected-react-router'
+import withTheme from '@material-ui/core/styles/withTheme'
+import {routerActions} from 'connected-react-router'
 
 @connect(mapStateToProps, mapDispatchToProps)
-export default class Sidebar extends React.Component {
+class Sidebar extends React.Component {
   state = {
     items: [
       {
@@ -25,14 +26,22 @@ export default class Sidebar extends React.Component {
       }
     ]
   }
-  goTo(pathname){
+
+  goTo(pathname) {
     this.props.push(pathname)
   }
-  render(){
+
+  static getDerivedStateFromProps(props, state){
+    state.items.find(item => item.url === props.pathname).selected = true
+    return state
+  }
+
+  render() {
     return (
-      <List className={this.props.className} value={this.props.pathname} onChange={(event, value) => this.goTo(value)}>
+      <List className={this.props.className}>
         {this.state.items.map((item, index) =>
-          <ListItem key={index} id={item.text} button onClick={() => this.goTo(item.url)}>
+          <ListItem key={index} id={item.text} button={!item.selected} onClick={() => this.goTo(item.url)}
+                    style={{backgroundColor: item.selected ? this.props.theme.palette.divider : 'transparent'}}>
             <ListItemIcon>
               {item.icon}
             </ListItemIcon>
@@ -54,3 +63,4 @@ function mapDispatchToProps(dispatch) {
   return bindActionCreators(routerActions, dispatch)
 }
 
+export default withTheme()(Sidebar)
