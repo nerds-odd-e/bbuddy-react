@@ -7,23 +7,7 @@ import DashboardPage from './containers/DashboardPage'
 import AccountsPage from './containers/AccountsPage'
 import AddAccountPage from './containers/AddAccountPage'
 
-const Parent = () => (
-  <Page>
-    <Authentication>
-      <Route path="/" component={DashboardPage}/>
-      <Route path="accounts" component={AccountsPage}/>
-      <Route path="accounts/add" component={AddAccountPage}/>
-    </Authentication>
-  </Page>
-)
-
-const Accounts = () => (
-  <Switch>
-    <Route exact path="/" component={layout(AccountsPage)}/>
-    <Route path="add" component={layout(AddAccountPage)}/>
-  </Switch>
-)
-const layout = Component => props => (
+const layout = Component => () => (
   <Page>
     <Authentication>
       <Component/>
@@ -34,7 +18,7 @@ const layout = Component => props => (
 export default () => {
   return (
     <Switch>
-      <Route path="/signin" component={SignInPage}/>
+      <Route exact path="/signin" component={SignInPage}/>
       <Route exact path="/" component={layout(DashboardPage)}/>
       <Route exact path="/accounts" component={layout(AccountsPage)}/>
       <Route exact path="/accounts/add" component={layout(AddAccountPage)}/>
