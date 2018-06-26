@@ -7,8 +7,8 @@ export default Presenter => ComposedComponent => connect(Presenter.mapStateToPro
     this.presenter.setState = (updater, callback) => this.setState(updater, callback)
     this.presenter.loadData && this.presenter.loadData()
   }
-  componentWillReceiveProps(nextProps) {
-    this.presenter.props = nextProps
+  componentDidUpdate() {
+    this.presenter.props = this.props
   }
   render() {
     return(

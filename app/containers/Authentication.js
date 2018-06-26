@@ -16,10 +16,6 @@ export default class Authentication extends React.Component {
     this.checkAuth();
   }
 
-  componentWillReceiveProps(nextProps) {
-    this.checkAuth();
-  }
-
   checkAuth() {
     if (!this.props.isAuthenticated) {
       this.props.dispatch(replace({

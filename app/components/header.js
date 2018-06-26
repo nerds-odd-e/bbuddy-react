@@ -5,8 +5,7 @@ import orange from '@material-ui/core/colors/orange';
 const black = common.black;
 const orange700 = orange['700'];
 
-export default class Header extends React.Component {
-  render() {
+export default props => {
     let styles = {
       root: {
         backgroundColor: black,
@@ -34,14 +33,13 @@ export default class Header extends React.Component {
       }
     };
     return(
-      <Paper zdepth={0} square={true} style={styles.root}>
+      <Paper square={true} style={styles.root}>
         <a href="/" style={styles.home}>
           <span className='hidden-on-mobile' style={styles.span}>BBuddy</span>
         </a>
         <div style={styles.container}>
-          {this.props.children}
+          {props.children}
         </div>
       </Paper>
     );
-  }
 }
