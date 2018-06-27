@@ -15,18 +15,11 @@ const style = {
   }
 };
 
-@connect(mapStateToProps)
-export default class Indicator extends React.Component {
-  render() {
-    if (!this.props.open)
-      return null;
-
-    return (
-      <div style={style.container}>
-        <CircularProgress size={40} style={style.refresh} />
-      </div>
-    );
-  }
+const Indicator =  props => {
+  return props.open &&
+  <div style={style.container}>
+    <CircularProgress size={40} style={style.refresh} />
+  </div>
 }
 
 function mapStateToProps(state) {
@@ -34,3 +27,5 @@ function mapStateToProps(state) {
     open: state.indicator.open
   }
 }
+
+export default connect(mapStateToProps)(Indicator)
