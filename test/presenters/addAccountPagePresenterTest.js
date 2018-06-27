@@ -2,7 +2,7 @@ import {AddAccountPagePresenter} from '../../app/presenters/addAccountPagePresen
 
 describe('AddAccountPagePresenter', () => {
   context('Save account', () => {
-    let addAccountStub, goBackSpy, setStateSpy
+    let addAccountStub, goBackSpy
     beforeEach(() => {
       let props = {addAccount: () => {}, goBack: () => {}}
       addAccountStub = sinon.stub(props, 'addAccount').yields()

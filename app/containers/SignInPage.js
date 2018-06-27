@@ -11,56 +11,25 @@ import Button from '@material-ui/core/Button'
 import TextField from '@material-ui/core/TextField';
 import Notification from '../containers/Notification'
 import Indicator from '../containers/Indicator'
+import present from '../presenters/signInPagePresenter'
 
-@connect(mapStateToProps, mapDispatchToProps)
-export default class SignInPage extends React.Component {
-  state = {
-    email: "",
-    password: ""
-  }
-  signIn() {
-    this.props.signIn(this.state)
-  }
+const SignInPage = props => (
+  <MuiThemeProvider theme={props.theme}>
+    <Card>
+      <CardHeader title='Sign In'/>
+      <CardContent>
+        <TextField fullWidth={true} id="email" label='Email' value={props.credential.email} onChange={props.handleChange('email')} autoFocus />
+        <TextField fullWidth={true} id="password" type="password" label='Password' value={props.credential.password} onChange={props.handleChange('password')} onKeyPress={props.keyPress} />
+      </CardContent>
+      <CardActions>
+        <Button variant="contained" color="primary" onClick={() => props.signIn()}>Login</Button>
+      </CardActions>
+    </Card>
+    <Notification />
+    <Indicator />
+  </MuiThemeProvider>
+)
 
-  keyPress(event){
-    if (event.charCode === 13){
-      event.preventDefault()
-      this.signIn()
-    }
-  }
-  handleChange = name => event => {
-    this.setState({
-      [name]: event.target.value,
-    });
-  }
 
-  render() {
-    const {pageStyle: {muiTheme}} = this.props
-    return (
-      <MuiThemeProvider theme={muiTheme}>
-        <Card>
-          <CardHeader title='Sign In'/>
-          <CardContent>
-            <TextField fullWidth={true} id="email" label='Email' value={this.state.email} onChange={this.handleChange('email')} autoFocus />
-            <TextField fullWidth={true} id="password" type="password" label='Password' value={this.state.password} onChange={this.handleChange('password')} onKeyPress={event => this.keyPress(event)} />
-          </CardContent>
-          <CardActions>
-            <Button variant="contained" color="primary" onClick={() => this.signIn()}>Login</Button>
-          </CardActions>
-        </Card>
-        <Notification />
-        <Indicator />
-      </MuiThemeProvider>
-    )
-  }
-}
 
-function mapStateToProps(state) {
-  return {
-    pageStyle: state.pageStyle
-  }
-}
-
-function mapDispatchToProps(dispatch) {
-  return bindActionCreators(AuthenticationActions, dispatch)
-}
+export default present(SignInPage)
