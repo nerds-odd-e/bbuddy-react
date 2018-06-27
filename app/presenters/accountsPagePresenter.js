@@ -7,10 +7,16 @@ import * as NavigationActions from '../actions/navigation'
 
 export class AccountsPagePresenter {
   constructor(props){
-    this.props = props
+    this.updateProps(props)
+  }
+  updateProps(props){
+    this.inputProps = props
+  }
+  getProps(){
+    return this.inputProps
   }
   loadData(){
-    this.props.loadAccounts()
+    this.inputProps.loadAccounts()
   }
 
   static mapStateToProps(state) {

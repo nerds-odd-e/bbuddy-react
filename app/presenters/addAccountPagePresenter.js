@@ -5,16 +5,33 @@ import * as AccountActions from '../actions/account'
 import * as NavigationActions from '../actions/navigation'
 
 export class AddAccountPagePresenter {
-  constructor(props){
-    this.props = props
+  account = {
+    name: "",
+    balance: 0
   }
+  constructor(props){
+    this.updateProps(props)
+  }
+
+  updateProps(props){
+    this.inputProps = props
+  }
+
   getProps(){
     return {
-      addAccount: account => this.addAccount(account)
+      account: this.account,
+      addAccount: () => this.addAccount(),
+      handleChange: name => this.handleChange(name)
     }
   }
-  addAccount(account){
-    this.props.addAccount(account, () => {this.props.goBack()})
+
+  handleChange = name => event => {
+    this.account[name] = event.target.value
+    this.setState({account: this.account})
+  }
+
+  addAccount(){
+    this.inputProps.addAccount(this.account, () => {this.inputProps.goBack()})
   }
 
   static mapStateToProps(state) {

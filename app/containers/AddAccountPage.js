@@ -7,33 +7,17 @@ import Button from '@material-ui/core/Button'
 import TextField from '@material-ui/core/TextField';
 import present from '../presenters/addAccountPagePresenter'
 
+const AddAccountPage = props => (
+  <Card>
+    <CardHeader title='Add Account'/>
+    <CardContent>
+      <TextField fullWidth={true} id="name" label="Name" value={props.account.name} onChange={props.handleChange('name')} autoFocus />
+      <TextField fullWidth={true} id="balance" label="Balance" value={props.account.balance} onChange={props.handleChange('balance')} />
+    </CardContent>
+    <CardActions>
+      <Button variant="contained" color="primary" onClick={() => props.addAccount()}>Save</Button>
+    </CardActions>
+  </Card>
+)
 
-@present
-export default class AddAccountPage extends React.Component {
-  state= {
-    name: "",
-    balance: 0
-  }
-  save(){
-    this.props.addAccount(this.state)
-  }
-  handleChange = name => event => {
-    this.setState({
-      [name]: event.target.value,
-    });
-  }
-  render() {
-    return (
-      <Card>
-        <CardHeader title='Add Account'/>
-        <CardContent>
-          <TextField fullWidth={true} id="name" label="Name" value={this.state.name} onChange={this.handleChange('name')} autoFocus />
-          <TextField fullWidth={true} id="balance" label="Balance" value={this.state.balance} onChange={this.handleChange('balance')} />
-        </CardContent>
-        <CardActions>
-          <Button variant="contained" color="primary" onClick={() => this.save()}>Save</Button>
-        </CardActions>
-      </Card>
-    )
-  }
-}
+export default present(AddAccountPage)

@@ -8,12 +8,12 @@ export default Presenter => ComposedComponent => connect(Presenter.mapStateToPro
     this.presenter.loadData && this.presenter.loadData()
   }
   shouldComponentUpdate(nextProps) {
-    this.presenter.props = nextProps
+    this.presenter.updateProps(nextProps)
     return true
   }
   render() {
     return(
-      <ComposedComponent {...this.presenter.props} {...this.presenter.getProps && this.presenter.getProps()} {...this.state}/>
+      <ComposedComponent {...this.presenter.getProps()} {...this.state}/>
     )
   }
 })
