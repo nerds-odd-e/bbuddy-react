@@ -30,7 +30,8 @@ describe('AddAccountPagePresenter', () => {
         let presenter = new AddAccountPagePresenter({})
         presenter.setState = sinon.spy()
 
-        presenter.handleChange(test.field)({target: {value: test.value}})
+        presenter.getProps().handleChange(test.field)({target: {value: test.value}})
+
         presenter.setState.should.be.calledWith(sinon.match.hasNested(`account.${test.field}`, test.value))
       })
     })

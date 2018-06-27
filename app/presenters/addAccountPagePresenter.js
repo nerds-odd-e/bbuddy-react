@@ -41,6 +41,7 @@ export class AddAccountPagePresenter {
   static mapDispatchToProps(dispatch) {
     return bindActionCreators(merge({}, AccountActions, NavigationActions), dispatch)
   }
+
 }
 
 export default present(AddAccountPagePresenter)

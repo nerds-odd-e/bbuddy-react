@@ -1,41 +1,19 @@
 import React from 'react';
-import {connect} from 'react-redux';
-import {push, replace} from 'connected-react-router'
+import present from '../presenters/authenticationPresenter'
 
-
-const mapStateToProps = (state) => ({
-  token: state.authentication.token,
-  user: state.authentication.user,
-  isAuthenticated: state.authentication.isAuthenticated
-});
-
-@connect(mapStateToProps)
+@present
 export default class Authentication extends React.Component {
 
   componentWillMount() {
-    this.checkAuth();
-  }
-
-  checkAuth() {
-    if (!this.props.isAuthenticated) {
-      this.props.dispatch(replace({
-          pathname: "/signin",
-          state: {nextPathname: this.props.location.pathname}
-        })
-      )
-    }
+    this.props.checkAuth();
   }
 
   render() {
     return (
       <div>
-        {this.props.isAuthenticated === true
-          ? this.props.children
-          : null
-        }
+        { this.props.children }
       </div>
     )
-
   }
 }
 

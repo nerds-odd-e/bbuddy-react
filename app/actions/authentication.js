@@ -18,7 +18,8 @@ export function signIn(credential){
     dispatch(doSignIn(credential))
       .then(action => {
         if (action.type === AuthenticationConstants.SIGN_IN_SUCCESS){
-          dispatch(push('/'))
+          let locationState = getState().router.location.state
+          dispatch(push(locationState && locationState.nextPathname? locationState.nextPathname : '/'))
         }
       })
   }

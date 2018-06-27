@@ -16,8 +16,15 @@ describe('authentication', () => {
     })
     it('go home when sign in success', () => {
       dispatch.returns(Promise.resolve({type: SIGN_IN_SUCCESS}))
+      getState.returns({router: {location: {state: undefined}}})
       signIn(credential)(dispatch, getState)
       dispatch.should.be.calledWith(push('/'))
+    })
+    it('go back to existing previous path when sign in success', () => {
+      dispatch.returns(Promise.resolve({type: SIGN_IN_SUCCESS}))
+      getState.returns({router: {location: {state: {nextPathname: 'NEXT_PATH'}}}})
+      signIn(credential)(dispatch, getState)
+      dispatch.should.be.calledWith(push('NEXT_PATH'))
     })
     it('no go home when sign in fail', () => {
       dispatch.returns(Promise.resolve({type: SIGN_IN_FAILURE}))
