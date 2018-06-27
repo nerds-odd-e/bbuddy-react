@@ -1,8 +1,5 @@
 import React from 'react'
-import {bindActionCreators} from 'redux'
-import {connect} from 'react-redux'
 import MuiThemeProvider from '@material-ui/core/styles/MuiThemeProvider'
-import * as AuthenticationActions from '../actions/authentication'
 import Card from '@material-ui/core/Card'
 import CardHeader from '@material-ui/core/CardHeader'
 import CardContent from '@material-ui/core/CardContent'
@@ -29,7 +26,5 @@ const SignInPage = props => (
     <Indicator />
   </MuiThemeProvider>
 )
-
-
 
 export default present(SignInPage)

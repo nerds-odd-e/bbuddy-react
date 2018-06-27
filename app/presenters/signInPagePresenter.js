@@ -16,6 +16,7 @@ export class SignInPagePresenter {
   getProps(){
     return {
       credential: this.credential,
+      theme: this.inputProps.theme,
       signIn: () => this.signIn(),
       handleChange: name => this.handleChange(name),
       keyPress: event => this.keyPress(event)
