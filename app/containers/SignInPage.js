@@ -9,6 +9,8 @@ import CardContent from '@material-ui/core/CardContent'
 import CardActions from '@material-ui/core/CardActions'
 import Button from '@material-ui/core/Button'
 import TextField from '@material-ui/core/TextField';
+import Notification from '../containers/Notification'
+import Indicator from '../containers/Indicator'
 
 @connect(mapStateToProps, mapDispatchToProps)
 export default class SignInPage extends React.Component {
@@ -46,6 +48,8 @@ export default class SignInPage extends React.Component {
             <Button variant="contained" color="primary" onClick={() => this.signIn()}>Login</Button>
           </CardActions>
         </Card>
+        <Notification />
+        <Indicator />
       </MuiThemeProvider>
     )
   }

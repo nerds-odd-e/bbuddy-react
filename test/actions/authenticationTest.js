@@ -1,6 +1,7 @@
 import {SIGN_IN_SUCCESS, SIGN_IN_FAILURE} from '../../app/constants/authentication'
 import {signIn, doSignIn} from '../../app/actions/authentication'
 import {push} from 'connected-react-router'
+import * as CommonActions from '../../app/actions/common'
 
 describe('authentication', () => {
   let dispatch, getState, credential
@@ -26,10 +27,15 @@ describe('authentication', () => {
       signIn(credential)(dispatch, getState)
       dispatch.should.be.calledWith(push('NEXT_PATH'))
     })
-    it('no go home when sign in fail', () => {
+    it('stay when sign in fail', () => {
       dispatch.returns(Promise.resolve({type: SIGN_IN_FAILURE}))
       signIn(credential)(dispatch, getState)
-      dispatch.should.not.be.calledWith(push('/'))
+      dispatch.should.not.be.calledWith(push(sinon.match.any))
+    })
+    it('stay when sign in fail', () => {
+      dispatch.returns(Promise.resolve({type: SIGN_IN_FAILURE}))
+      signIn(credential)(dispatch, getState)
+      dispatch.should.calledWith(CommonActions.openNotification('Email and password are invalid.'))
     })
   })
 })

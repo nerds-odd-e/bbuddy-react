@@ -51,10 +51,22 @@ describe('Api middleware', () => {
     next.should.be.calledWith({type: 'HIDE_INDICATOR'})
   })
   it('dispatch failure type action when api invocation fail', () => {
-    callApi.returns(Promise.reject({status: 500, data: {name: 'Wrong name', balance: 'Wrong number'}}))
+    callApi.returns(Promise.reject({status: 500, data: {errors: [
+          {field: 'name', defaultMessage: 'cannot be empty'},
+          {field: 'balance', defaultMessage: 'is invalid'}
+        ]}}))
     api(store)(next)(action)
 
-    next.should.be.calledWith({type: 'FAILURE', error: 'Wrong name, Wrong number'})
+    next.should.be.calledWith({type: 'FAILURE', error: 'name cannot be empty, balance is invalid'})
+  })
+  it('dispatch notification action when api invocation fail', () => {
+    callApi.returns(Promise.reject({status: 500, data: {errors: [
+          {field: 'name', defaultMessage: 'cannot be empty'},
+          {field: 'balance', defaultMessage: 'is invalid'}
+        ]}}))
+    api(store)(next)(action)
+
+    next.should.be.calledWith({type: 'OPEN_NOTIFICATION', payload: {message: 'name cannot be empty, balance is invalid'}})
   })
   it('dispatch failure type action with default error message when api invocation fail without specific error', () => {
     callApi.returns(Promise.reject({status: 500, data: {}}))

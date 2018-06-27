@@ -36,9 +36,11 @@ export default store => next => action => {
         next(push('/signin'))
       }
       next(CommonActions.hideIndicator())
+      let message = data.errors ? data.errors.map(error => error.field + ' ' + error.defaultMessage).join(', ') : 'Something bad happened'
+      next(CommonActions.openNotification(message))
       return next(actionWith({
         type: failureType,
-        error: values(data).join(', ') || 'Something bad happened'
+        error: message
       }))
     }
   )

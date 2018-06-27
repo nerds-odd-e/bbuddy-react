@@ -1,6 +1,7 @@
 import { CALL_API } from '../middleware/api'
 import * as AuthenticationConstants from '../constants/authentication'
 import {push} from 'connected-react-router'
+import * as CommonActions from './common'
 
 export function doSignIn(credential){
   return {
@@ -20,6 +21,8 @@ export function signIn(credential){
         if (action.type === AuthenticationConstants.SIGN_IN_SUCCESS){
           let locationState = getState().router.location.state
           dispatch(push(locationState && locationState.nextPathname? locationState.nextPathname : '/'))
+        } else {
+          dispatch(CommonActions.openNotification('Email and password are invalid.'))
         }
       })
   }

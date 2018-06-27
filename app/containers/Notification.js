@@ -1,23 +1,16 @@
 import React from 'react';
-import { bindActionCreators } from 'redux'
-import { connect } from 'react-redux'
+import {bindActionCreators} from 'redux'
+import {connect} from 'react-redux'
 import Snackbar from '@material-ui/core/Snackbar'
 import * as CommonActions from '../actions/common'
 
-@connect(mapStateToProps, mapDispatchToProps)
-export default class Notification extends React.Component {
-  render() {
-    const { notification, closeNotification } = this.props;
-    return (
-      <Snackbar
-        ref="snackbar"
-        open={notification.open}
-        message={notification.message}
-        autoHideDuration={notification.duration}
-        onRequestClose={closeNotification} />
-    )
-  }
-}
+const Notification = props => (
+  <Snackbar
+    open={props.notification.open}
+    message={props.notification.message}
+    autoHideDuration={props.notification.duration}
+    onClose={props.closeNotification}/>
+)
 
 function mapStateToProps(state) {
   return {
@@ -28,3 +21,5 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
   return bindActionCreators(CommonActions, dispatch)
 }
+
+export default connect(mapStateToProps, mapDispatchToProps)(Notification)
