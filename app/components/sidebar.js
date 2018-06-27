@@ -9,9 +9,23 @@ import DashboardIcon from '@material-ui/icons/Dashboard'
 import AccountIcon from '@material-ui/icons/EuroSymbol'
 import {routerActions} from 'connected-react-router'
 
-@connect(mapStateToProps, mapDispatchToProps)
-export default class Sidebar extends React.Component {
-  state = {
+
+const Sidebar = props => (
+  <List className={props.className}>
+    {props.items.map((item, index) =>
+      <ListItem key={index} id={item.text} button onClick={() => props.push(item.url)}>
+        <ListItemIcon>
+          {item.icon}
+        </ListItemIcon>
+        <ListItemText primary={item.text}/>
+      </ListItem>
+    )}
+  </List>
+)
+
+function mapStateToProps(state) {
+  return {
+    pathname: state.router.location.pathname,
     items: [
       {
         text: 'Dashboard',
@@ -25,33 +39,10 @@ export default class Sidebar extends React.Component {
       }
     ]
   }
-
-  goTo(pathname) {
-    this.props.push(pathname)
-  }
-
-  render() {
-    return (
-      <List className={this.props.className}>
-        {this.state.items.map((item, index) =>
-          <ListItem key={index} id={item.text} button onClick={() => this.goTo(item.url)}>
-            <ListItemIcon>
-              {item.icon}
-            </ListItemIcon>
-            <ListItemText primary={item.text}/>
-          </ListItem>
-        )}
-      </List>
-    )
-  }
-}
-
-function mapStateToProps(state) {
-  return {
-    pathname: state.router.location.pathname
-  }
 }
 
 function mapDispatchToProps(dispatch) {
   return bindActionCreators(routerActions, dispatch)
 }
+
+export default connect(mapStateToProps, mapDispatchToProps)(Sidebar)
