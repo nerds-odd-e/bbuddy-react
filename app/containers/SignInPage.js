@@ -15,8 +15,8 @@ const SignInPage = props => (
     <Card>
       <CardHeader title='Sign In'/>
       <CardContent>
-        <TextField fullWidth={true} id="email" label='Email' value={props.credential.email} onChange={props.handleChange('email')} autoFocus />
-        <TextField fullWidth={true} id="password" type="password" label='Password' value={props.credential.password} onChange={props.handleChange('password')} onKeyPress={props.keyPress} />
+        <TextField fullWidth={true} id="email" label='Email' value={props.credential.email} onChange={props.handleChange('email')} autoFocus error={!!props.errors.email} helperText={props.errors.email}/>
+        <TextField fullWidth={true} id="password" type="password" label='Password' value={props.credential.password} onChange={props.handleChange('password')} onKeyPress={props.keyPress} error={!!props.errors.password} helperText={props.errors.password}/>
       </CardContent>
       <CardActions>
         <Button variant="contained" color="primary" onClick={() => props.signIn()}>Login</Button>

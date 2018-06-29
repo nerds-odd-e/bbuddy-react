@@ -1,12 +1,19 @@
 import present from './presenter'
 import {bindActionCreators} from 'redux'
 import * as AuthenticationActions from '../actions/authentication'
+import {required, email, Validation} from '../validation'
 
 export class SignInPagePresenter {
   credential = {
     email: '',
     password: ''
   }
+  validation = new Validation({email: [required, email], password: [required]})
+  errors = {
+    email: '',
+    password: ''
+  }
+
   constructor(props){
     this.updateProps(props)
   }
@@ -17,13 +24,16 @@ export class SignInPagePresenter {
     return {
       credential: this.credential,
       theme: this.inputProps.theme,
+      errors: this.errors,
       signIn: () => this.signIn(),
       handleChange: name => this.handleChange(name),
       keyPress: event => this.keyPress(event)
     }
   }
   signIn(){
-    this.inputProps.signIn(this.credential)
+    this.validation.validate(this.credential,
+      () => this.inputProps.signIn(this.credential),
+      errors => this.setState({errors}))
   }
   handleChange = name => event => {
     this.credential[name] = event.target.value
