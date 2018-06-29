@@ -11,8 +11,8 @@ const AddAccountPage = props => (
   <Card>
     <CardHeader title='Add Account'/>
     <CardContent>
-      <TextField fullWidth={true} id="name" label="Name" value={props.account.name} onChange={props.handleChange('name')} autoFocus />
-      <TextField fullWidth={true} id="balance" label="Balance" value={props.account.balance} onChange={props.handleChange('balance')} />
+      <TextField fullWidth={true} id="name" label="Name" value={props.account.name} onChange={props.handleChange('name')} autoFocus error={!!props.errors.name} helperText={props.errors.name} />
+      <TextField fullWidth={true} id="balance" label="Balance" value={props.account.balance} onChange={props.handleChange('balance')} error={!!props.errors.balance} helperText={props.errors.balance}/>
     </CardContent>
     <CardActions>
       <Button variant="contained" color="primary" onClick={() => props.addAccount()}>Save</Button>

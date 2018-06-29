@@ -2,22 +2,47 @@ import {AddAccountPagePresenter} from '../../app/presenters/addAccountPagePresen
 
 describe('AddAccountPagePresenter', () => {
   context('Save account', () => {
-    let addAccountStub, goBackSpy
+    let addAccountStub, goBackSpy, presenter
     beforeEach(() => {
-      let props = {addAccount: () => {}, goBack: () => {}}
+      let props = {
+        addAccount: () => {
+        }, goBack: () => {
+        }
+      }
       addAccountStub = sinon.stub(props, 'addAccount').yields()
       goBackSpy = sinon.spy(props, 'goBack')
-      let presenter = new AddAccountPagePresenter(props)
+      presenter = new AddAccountPagePresenter(props)
       presenter.setState = sinon.spy()
       presenter.getProps().handleChange('name')({target: {value: 'CMB'}})
       presenter.getProps().handleChange('balance')({target: {value: '1000'}})
-      presenter.getProps().addAccount()
     })
     it('save by action', () => {
+      presenter.getProps().addAccount()
       addAccountStub.should.be.calledWith({name: 'CMB', balance: '1000'}, sinon.match.any)
     })
     it('go back after saving', () => {
+      presenter.getProps().addAccount()
       goBackSpy.should.be.called
+    })
+    context('validation error', () => {
+      it('name should not be empty', () => {
+        presenter.getProps().handleChange('name')({target: {value: ''}})
+        presenter.getProps().addAccount()
+        presenter.setState.should.be.calledWith(sinon.match.hasNested('errors.name', 'Name should not be empty'))
+        addAccountStub.should.not.be.called
+      })
+      it('balance should not be empty', () => {
+        presenter.getProps().handleChange('balance')({target: {value: ''}})
+        presenter.getProps().addAccount()
+        presenter.setState.should.be.calledWith(sinon.match.hasNested('errors.balance', 'Balance should not be empty'))
+        addAccountStub.should.not.be.called
+      })
+      it('balance should be a number', () => {
+        presenter.getProps().handleChange('balance')({target: {value: 'a'}})
+        presenter.getProps().addAccount()
+        presenter.setState.should.be.calledWith(sinon.match.hasNested('errors.balance', 'Balance is not a valid number'))
+        addAccountStub.should.not.be.called
+      })
     })
   })
   context('handle changes', () => {

@@ -1,2 +1,2 @@
-export {required, email} from './validators'
+export * from './validators'
 export Validation from './validation'
