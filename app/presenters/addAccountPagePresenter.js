@@ -37,13 +37,14 @@ export class AddAccountPagePresenter {
 
   handleChange = name => event => {
     this.account[name] = event.target.value
-    this.setState({account: this.account})
+    this.errors[name] = ''
+    this.setState({account: this.account, errors: this.errors})
   }
 
   addAccount(){
     this.validation.validate(this.account,
       () => this.inputProps.addAccount(this.account, () => {this.inputProps.goBack()}),
-      errors => this.setState({errors})
+      errors => {this.errors = errors;this.setState({errors})}
     )
   }
 

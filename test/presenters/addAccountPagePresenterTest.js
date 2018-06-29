@@ -46,19 +46,29 @@ describe('AddAccountPagePresenter', () => {
     })
   })
   context('handle changes', () => {
+    let presenter
+    beforeEach(() => {
+      presenter = new AddAccountPagePresenter({})
+      presenter.setState = sinon.spy()
+    })
     let tests = [
       {field: 'name', value: 'ICBC'},
       {field: 'balance', value: 100}
     ]
     tests.forEach(test => {
       it(`set state for ${test.field}`, () => {
-        let presenter = new AddAccountPagePresenter({})
-        presenter.setState = sinon.spy()
-
         presenter.getProps().handleChange(test.field)({target: {value: test.value}})
 
         presenter.setState.should.be.calledWith(sinon.match.hasNested(`account.${test.field}`, test.value))
       })
+    })
+    it('clear changed field error', () => {
+      presenter.getProps().addAccount()
+      presenter.getProps().handleChange('name')({target: {value: 'a'}})
+
+      presenter.setState.should.be.calledWith(
+        sinon.match.hasNested('errors.name', '')
+          .and(sinon.match.hasNested('errors.balance', sinon.match(value => !!value))))
     })
   })
   context('map props', () => {
