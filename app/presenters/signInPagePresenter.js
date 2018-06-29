@@ -33,11 +33,16 @@ export class SignInPagePresenter {
   signIn(){
     this.validation.validate(this.credential,
       () => this.inputProps.signIn(this.credential),
-      errors => this.setState({errors}))
+      errors => {
+        this.errors = errors
+        this.setState({errors})
+      }
+    )
   }
   handleChange = name => event => {
     this.credential[name] = event.target.value
-    this.setState({credential: this.credential})
+    this.errors[name] = ''
+    this.setState({credential: this.credential, errors: this.errors})
   }
   keyPress(event){
     if (event.charCode === 13){

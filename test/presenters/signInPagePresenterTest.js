@@ -67,6 +67,17 @@ describe('SignInPagePresenter', () => {
         presenter.setState.should.be.calledWith(sinon.match.hasNested(`credential.${test.field}`, test.value))
       })
     })
+    it('clear changed field error', () => {
+      let presenter = new SignInPagePresenter({})
+      presenter.setState = sinon.spy()
+
+      presenter.getProps().signIn()
+      presenter.getProps().handleChange('email')({target: {value: 'a'}})
+
+      presenter.setState.should.be.calledWith(
+        sinon.match.hasNested('errors.email', '')
+          .and(sinon.match.hasNested('errors.password', sinon.match(value => !!value))))
+    })
   })
   context('map props', () => {
     it('from state with theme', () => {
