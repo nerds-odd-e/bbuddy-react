@@ -1,32 +1,27 @@
 import present from './presenter'
+import PagePresenter from "./pagePresenter";
 import {bindActionCreators} from 'redux'
 import merge from 'lodash/merge'
+import assign from 'lodash/assign'
 import * as AccountActions from '../actions/account'
 import * as NavigationActions from '../actions/navigation'
-import {Validation, required, number} from '../validation'
+import {number, required, Validation} from '../validation'
 
-export class AddAccountPagePresenter {
-  account = {
+export class AddAccountPagePresenter extends PagePresenter {
+  account = this.state('account', {
     name: "",
     balance: 0
-  }
+  })
   validation = new Validation({
     name: [required],
     balance: [required, number]
   })
-  errors = {
+  errors = this.state('errors', {
     name: '',
     balance: ''
-  }
-  constructor(props){
-    this.updateProps(props)
-  }
+  })
 
-  updateProps(props){
-    this.inputProps = props
-  }
-
-  getProps(){
+  getProps() {
     return {
       account: this.account,
       errors: this.errors,
@@ -38,13 +33,12 @@ export class AddAccountPagePresenter {
   handleChange = name => event => {
     this.account[name] = event.target.value
     this.errors[name] = ''
-    this.setState({account: this.account, errors: this.errors})
   }
 
-  addAccount(){
+  addAccount() {
     this.validation.validate(this.account,
-      () => this.inputProps.addAccount(this.account, () => {this.inputProps.goBack()}),
-      errors => {this.errors = errors;this.setState({errors})}
+      () => this.inputProps.addAccount(this.account, () => this.inputProps.goBack()),
+      errors => assign(this.errors, errors)
     )
   }
 

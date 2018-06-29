@@ -1,16 +1,9 @@
 import present from './presenter'
 import {bindActionCreators} from 'redux'
 import {routerActions} from 'connected-react-router'
+import PagePresenter from "./pagePresenter";
 
-export class AuthenticationPresenter {
-  constructor(props) {
-    this.updateProps(props)
-  }
-
-  updateProps(props) {
-    this.inputProps = props
-  }
-
+export class AuthenticationPresenter extends PagePresenter{
   getProps() {
     return {
       checkAuth: () => this.checkAuth(),

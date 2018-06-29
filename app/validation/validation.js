@@ -5,7 +5,7 @@ export default class Validation {
   constructor(rules){
     this.rules = rules
   }
-  validate(data, success, fail){
+  validate(data, success = () => {}, fail = () => {}){
     _(this.rules).each((validators, field) => {
       this.errors[field] = _.chain(validators)
         .find(validator => validator.invalid(data[field]))

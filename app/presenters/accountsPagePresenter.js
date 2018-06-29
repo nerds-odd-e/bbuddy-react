@@ -4,14 +4,9 @@ import merge from 'lodash/merge'
 import values from 'lodash/values'
 import * as AccountActions from '../actions/account'
 import * as NavigationActions from '../actions/navigation'
+import PagePresenter from "./pagePresenter";
 
-export class AccountsPagePresenter {
-  constructor(props){
-    this.updateProps(props)
-  }
-  updateProps(props){
-    this.inputProps = props
-  }
+export class AccountsPagePresenter extends PagePresenter{
   getProps(){
     return this.inputProps
   }

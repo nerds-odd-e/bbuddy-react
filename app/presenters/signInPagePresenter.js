@@ -1,25 +1,21 @@
 import present from './presenter'
 import {bindActionCreators} from 'redux'
+import assign from 'lodash/assign'
 import * as AuthenticationActions from '../actions/authentication'
 import {required, email, Validation} from '../validation'
+import PagePresenter from "./pagePresenter";
 
-export class SignInPagePresenter {
-  credential = {
+export class SignInPagePresenter extends PagePresenter{
+  credential = this.state('credential', {
     email: '',
     password: ''
-  }
+  })
   validation = new Validation({email: [required, email], password: [required]})
-  errors = {
+  errors = this.state('errors', {
     email: '',
     password: ''
-  }
+  })
 
-  constructor(props){
-    this.updateProps(props)
-  }
-  updateProps(props){
-    this.inputProps = props
-  }
   getProps(){
     return {
       credential: this.credential,
@@ -33,16 +29,12 @@ export class SignInPagePresenter {
   signIn(){
     this.validation.validate(this.credential,
       () => this.inputProps.signIn(this.credential),
-      errors => {
-        this.errors = errors
-        this.setState({errors})
-      }
+      errors => assign(this.errors, errors)
     )
   }
   handleChange = name => event => {
     this.credential[name] = event.target.value
     this.errors[name] = ''
-    this.setState({credential: this.credential, errors: this.errors})
   }
   keyPress(event){
     if (event.charCode === 13){
