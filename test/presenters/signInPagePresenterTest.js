@@ -53,24 +53,23 @@ describe('SignInPagePresenter', () => {
     })
   })
   context('handle changes', () => {
+    let presenter
+    beforeEach(() => {
+      presenter = new SignInPagePresenter({})
+      presenter.setState = sinon.spy()
+    })
     let tests = [
       {field: 'email', value: 'EMAIL'},
       {field: 'password', value: 'PASSWORD'}
     ]
     tests.forEach(test => {
       it(`set state for ${test.field}`, () => {
-        let presenter = new SignInPagePresenter({})
-        presenter.setState = sinon.spy()
-
         presenter.getProps().handleChange(test.field)({target: {value: test.value}})
 
         presenter.setState.should.be.calledWith(sinon.match.hasNested(`credential.${test.field}`, test.value))
       })
     })
     it('clear changed field error', () => {
-      let presenter = new SignInPagePresenter({})
-      presenter.setState = sinon.spy()
-
       presenter.getProps().signIn()
       presenter.getProps().handleChange('email')({target: {value: 'a'}})
 
