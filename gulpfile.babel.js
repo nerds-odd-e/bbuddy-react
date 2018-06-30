@@ -32,7 +32,13 @@ gulp.task("coverage", ["clean:coverage"], () => {
 })
 
 gulp.task("build", ["clean:build"], callback => {
-  webpack(webpackConfig(dev), (err, stats) => {
+  const analyze = process.argv.includes('--analyze')
+  let config = webpackConfig(dev);
+  if (analyze){
+    const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
+    config.plugins.push(new BundleAnalyzerPlugin())
+  }
+  webpack(config, (err, stats) => {
     if (err) throw new gutil.PluginError("build", err)
     gutil.log("[build]", stats.toString({
       chunks: false,

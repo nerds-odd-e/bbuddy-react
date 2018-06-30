@@ -9,21 +9,21 @@ module.exports = function (dev) {
     devtool: dev ? 'eval-source-map' : 'source-map',
     entry: {
       app: ['./app/index'],
-      vendor: [
-        'history',
-        'whatwg-fetch',
-        '@material-ui/core',
-        '@material-ui/icons',
-        'react',
-        'react-dom',
-        'react-redux',
-        'react-router',
-        'react-tap-event-plugin',
-        'redux',
-        'redux-logger',
-        'connected-react-router',
-        'redux-thunk'
-      ]
+      // vendor: [
+      //   'history',
+      //   'whatwg-fetch',
+      //   // '@material-ui/core',
+      //   // '@material-ui/icons',
+      //   'react',
+      //   'react-dom',
+      //   'react-redux',
+      //   'react-router',
+      //   'react-tap-event-plugin',
+      //   'redux',
+      //   'redux-logger',
+      //   'connected-react-router',
+      //   'redux-thunk'
+      // ]
     },
     resolve: {
       extensions: [".js", ".jsx", ".scss"]
@@ -46,15 +46,15 @@ module.exports = function (dev) {
       runtimeChunk: {
         name: "manifest"
       },
-      splitChunks: {
-        cacheGroups: {
-          commons: {
-            test: /[\\/]node_modules[\\/]/,
-            name: "vendor",
-            chunks: "all"
-          }
-        }
-      }
+      // splitChunks: {
+      //   cacheGroups: {
+      //     commons: {
+      //       test: /[\\/]node_modules[\\/]/,
+      //       name: "vendor",
+      //       chunks: "all"
+      //     }
+      //   }
+      // }
     },
     plugins: [
       new ExtractTextPlugin(dev ? '[name].css' : '[name].[hash].css'),
