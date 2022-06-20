@@ -19,7 +19,7 @@ const SignInPage = props => (
         <TextField fullWidth={true} id="password" type="password" label='Password' value={props.credential.password} onChange={props.handleChange('password')} onKeyPress={props.keyPress} error={!!props.errors.password} helperText={props.errors.password}/>
       </CardContent>
       <CardActions>
-        <Button variant="contained" color="primary" onClick={() => props.signIn()}>Login</Button>
+        <Button id="login" variant="contained" color="primary" onClick={() => props.signIn()}>Login</Button>
       </CardActions>
     </Card>
     <Notification />
