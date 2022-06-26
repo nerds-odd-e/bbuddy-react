@@ -15,7 +15,7 @@ const AddAccountPage = props => (
       <TextField fullWidth={true} id="balance" label="Balance" value={props.account.balance} onChange={props.handleChange('balance')} error={!!props.errors.balance} helperText={props.errors.balance}/>
     </CardContent>
     <CardActions>
-      <Button variant="contained" color="primary" onClick={() => props.addAccount()}>Save</Button>
+      <Button id="save" variant="contained" color="primary" onClick={() => props.addAccount()}>Save</Button>
     </CardActions>
   </Card>
 )
