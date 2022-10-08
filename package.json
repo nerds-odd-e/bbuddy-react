@@ -55,7 +55,7 @@
     "mocha": "^5.2.0",
     "node-sass": "^4.5.0",
     "pluralize": "^7.0.0",
-    "postcss": "^6.0.23",
+    "postcss": "^7.0.36",
     "raw-loader": "^0.5.1",
     "react-hot-loader": "4.3.3",
     "redux-devtools": "^3.3.2",
